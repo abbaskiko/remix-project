@@ -8,7 +8,6 @@ var CompilerImport = require('../../compiler/compiler-imports')
 const addTooltip = require('../../ui/tooltip')
 
 class CompileTab {
-
   constructor (queryParams, fileManager, editor, config, fileProvider) {
     this.event = new EventEmitter()
     this.queryParams = queryParams
@@ -138,10 +137,10 @@ class CompileTab {
             (cb) => { if (!splitted) { cb('URL not parseable: ' + url) } else { this.importFileCb('localhost/installed_contracts/' + splitted[1] + '/contracts/' + splitted[2], cb) } },
             (cb) => { this.importFileCb('localhost/node_modules/' + url, cb) },
             (cb) => { if (!splitted) { cb('URL not parseable: ' + url) } else { this.importFileCb('localhost/node_modules/' + splitted[1] + '/contracts/' + splitted[2], cb) } }],
-            (error, result) => {
-              if (error) return this.importExternal(url, filecb)
-              filecb(null, result)
-            }
+          (error, result) => {
+            if (error) return this.importExternal(url, filecb)
+            filecb(null, result)
+          }
           )
         } else {
           // try to resolve external content
@@ -150,7 +149,6 @@ class CompileTab {
       })
     }
   }
-
 }
 
 module.exports = CompileTab

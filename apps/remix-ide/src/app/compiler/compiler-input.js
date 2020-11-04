@@ -12,8 +12,8 @@ module.exports = (sources, opts) => {
       libraries: opts.libraries,
       outputSelection: {
         '*': {
-          '': [ 'ast'],
-          '*': [ 'abi', 'metadata', 'devdoc', 'userdoc', 'evm.legacyAssembly', 'evm.bytecode', 'evm.deployedBytecode', 'evm.methodIdentifiers', 'evm.gasEstimates' ]
+          '': ['ast'],
+          '*': ['abi', 'metadata', 'devdoc', 'userdoc', 'evm.legacyAssembly', 'evm.bytecode', 'evm.deployedBytecode', 'evm.methodIdentifiers', 'evm.gasEstimates']
         }
       }
     }

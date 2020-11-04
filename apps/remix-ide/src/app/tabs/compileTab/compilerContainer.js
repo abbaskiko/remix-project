@@ -1,14 +1,13 @@
 
+import { canUseWorker, baseURLBin, baseURLWasm, urlFromVersion, pathToURL, promisedMiniXhr } from '../../compiler/compiler-utils'
 const yo = require('yo-yo')
 const helper = require('../../../lib/helper')
 const addTooltip = require('../../ui/tooltip')
 const semver = require('semver')
 const modalDialogCustom = require('../../ui/modal-dialog-custom')
 const css = require('../styles/compile-tab-styles')
-import { canUseWorker, baseURLBin, baseURLWasm, urlFromVersion, pathToURL, promisedMiniXhr } from '../../compiler/compiler-utils'
 
 class CompilerContainer {
-
   constructor (compileTabLogic, editor, config, queryParams) {
     this._view = {}
     this.compileTabLogic = compileTabLogic
@@ -127,7 +126,7 @@ class CompilerContainer {
   }
 
   _disableCompileBtn (shouldDisable) {
-    let btn = document.getElementById('compileBtn')
+    const btn = document.getElementById('compileBtn')
     if (!btn) return
     if (shouldDisable) {
       btn.classList.add('disabled')
@@ -176,7 +175,7 @@ class CompilerContainer {
     this.compileTabLogic.compiler.event.register('compilerLoaded', (version) => this.setVersionText(version))
     this.fetchAllVersion((allversions, selectedVersion, isURL) => {
       this.data.allversions = allversions
-      if(isURL) this._updateVersionSelector(selectedVersion)
+      if (isURL) this._updateVersionSelector(selectedVersion)
       else {
         this.data.selectedVersion = selectedVersion
         if (this._view.versionSelector) this._updateVersionSelector()
@@ -216,7 +215,7 @@ class CompilerContainer {
         <option>homestead</option>
       </select>`
     if (this.compileTabLogic.evmVersion) {
-      let s = this._view.evmVersionSelector
+      const s = this._view.evmVersionSelector
       let i
       for (i = 0; i < s.options.length; i++) {
         if (s.options[i].value === this.compileTabLogic.evmVersion) {
@@ -336,7 +335,7 @@ class CompilerContainer {
   }
 
   onchangeEvmVersion () {
-    let s = this._view.evmVersionSelector
+    const s = this._view.evmVersionSelector
     let v = s.value
     if (v === 'default') {
       v = null
@@ -470,8 +469,8 @@ class CompilerContainer {
       // Check if version is a URL and corresponding filename starts with 'soljson'
       if (selectedVersion.startsWith('https://')) {
         const urlArr = selectedVersion.split('/')
-        if(urlArr[urlArr.length - 1].startsWith('soljson')) isURL = true
-      } 
+        if (urlArr[urlArr.length - 1].startsWith('soljson')) isURL = true
+      }
       if (wasmRes.event.type !== 'error') {
         allVersionsWasm = JSON.parse(wasmRes.json).builds.slice().reverse()
       }
@@ -492,12 +491,12 @@ class CompilerContainer {
     }
     callback(allVersions, selectedVersion, isURL)
   }
+
   scheduleCompilation () {
     if (!this.config.get('autoCompile')) return
     if (this.data.compileTimeout) window.clearTimeout(this.data.compileTimeout)
     this.data.compileTimeout = window.setTimeout(() => this.compileIfAutoCompileOn(), this.data.timeout)
   }
-
 }
 
 module.exports = CompilerContainer
